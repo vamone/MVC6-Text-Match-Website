@@ -6,8 +6,9 @@
 
 @using (@Html.BeginForm("Index", "Home", FormMethod.Post))
 {
+    @Html.ValidationSummary(true, "Obs! Something went wrong. Contact development team.", new { @class = "alert alert-danger"});
 
-    <h1>Find matching indexes</h1>
+    <h1>Find matches</h1>
 
     <div class="form-group">
         @Html.LabelFor(m => m.Text, new { @class = "form-label" })<span class="required-field-star">*</span>:

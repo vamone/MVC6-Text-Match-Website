@@ -1,5 +1,7 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using System;
+using Microsoft.AspNetCore.Mvc;
 
+using TextMatch.Website.Extension;
 using TextMatch.Website.Models;
 using TextMatch.Website.Utilities;
 
@@ -17,26 +19,21 @@ namespace TextMatch.Website.Controllers
         [HttpPost]
         public IActionResult Index(TextMatchViewModel model)
         {
-            if (!this.ModelState.IsValid)
+            try
             {
-                return this.View(model);
-            }
-
-            var array = TextMatchUtility.GetMatchedIndexes(model.Text, model.SubText);
-
-            string matchingResults = null;
-
-            for (int i = 0; i < array.Length; i++)
-            {
-                matchingResults = matchingResults + array[i];
-
-                if (i + 1 < array.Length)
+                if (!ModelState.IsValid)
                 {
-                    matchingResults = matchingResults + ",";
+                    return this.View(model);
                 }
-            }
 
-            model.MatchingResult = matchingResults; 
+                var indexes = TextMatchUtility.GetMatchedIndexes(model.Text, model.SubText);
+
+                model.MatchingResult = indexes.JoinArrayIntoStringBySeparator(',');
+            }
+            catch (Exception ex)
+            {
+                ModelState.AddModelError(string.Empty, ex.Message);
+            }
 
             return this.View(model);
         }
