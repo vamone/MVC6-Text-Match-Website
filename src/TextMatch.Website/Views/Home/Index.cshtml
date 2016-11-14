@@ -1,0 +1,38 @@
+﻿
+@model TextMatch.Website.Models.TextMatchViewModel
+@{
+    ViewData["Title"] = "Text Match Calculator";
+}
+
+@using (@Html.BeginForm("Index", "Home", FormMethod.Post))
+{
+
+    <h1>Find matching indexes</h1>
+
+    <div class="form-group">
+        @Html.LabelFor(m => m.Text, new { @class = "form-label" })<span class="required-field-star">*</span>:
+        @Html.TextAreaFor(m => m.Text, new { @class = "form-control"})
+        @Html.ValidationMessageFor(m => m.Text, "", new { @class = "text-danger" })
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(m => m.SubText, new { @class = "form-label" })<span class="required-field-star">*</span>:
+        @Html.TextBoxFor(m => m.SubText, new { @class = "form-control" })
+        @Html.ValidationMessageFor(m => m.SubText, "", new { @class = "text-danger" })
+    </div>
+
+    <button class="btn btn-primary" type="submit">Find</button>
+
+
+    <h2>Results</h2>
+
+    @if (string.IsNullOrWhiteSpace(Model.MatchingResult))
+    {
+        <p>No matching results.</p>
+    }
+    else
+    {
+        @Html.DisplayTextFor(m => m.MatchingResult)
+    }
+
+}
