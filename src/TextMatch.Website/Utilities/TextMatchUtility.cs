@@ -30,9 +30,11 @@ namespace TextMatch.Website.Utilities
                 {
                     int charsMatchCount = 0;
 
+                    int nextCharIndex = 0;
+
                     for (int j = 0; j < subtextCharsCount; j++)
                     {
-                        int nextCharIndex = i + j >= textCharsCount ? textCharsCount - 1 : i + j;
+                        nextCharIndex = i + j >= textCharsCount ? textCharsCount - 1 : i + j;
 
                         char nextTextChar = text[nextCharIndex];
                         char currentSubtextChar = subtext[j];
@@ -60,6 +62,8 @@ namespace TextMatch.Website.Utilities
                         int charIndex = i + 1;
 
                         indexes[indexesArraySize - 1] = charIndex;
+
+                        i = nextCharIndex;
                     }
                 }
             }
